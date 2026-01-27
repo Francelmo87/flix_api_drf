@@ -1,34 +1,30 @@
 from django.db.models import Avg
 from rest_framework import serializers
-from .models import Movie
+
+from actors.serializers import ActorSerializer
+from genres.serializers import GenreSerializer
+from movies.models import Movie
 
 
-class MovieSerializer(serializers.ModelSerializer):
-    ''' Campo calculado precisa herdar de SerializerMethodField(read_only=True) e fazee uma método com get_nomedocampo(self, obj):'''
-    rate = serializers.SerializerMethodField(read_only=True)
+# class MovieSerializer(serializers.Serializer):
+#     id = serializers.IntegerField()
+#     title = serializers.CharField()
+#     genre = serializers.PrimaryKeyRelatedField(
+#         queryset=Genre.objects.all(),
+#     )
+#     release_date = serializers.DateField()
+#     actors = serializers.PrimaryKeyRelatedField(
+#         queryset=Actor.objects.all(),
+#         many=True,
+#     )
+#     resume = serializers.CharField()
+
+
+class MovieModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
         fields = '__all__'
-
-    # Método do campo calculado def get_campo(self,obj)
-    # def get_rate(self, obj):
-    #     reviews = obj.reviews.all()
-    #     if reviews:
-    #         # Fazer a soma de todas reviews do sistema
-    #         sum_reviews = 0
-    #         for review in reviews:
-    #             sum_reviews += review.stars
-    #         # Conta o total de reviews do sistema
-    #         reviews_count = reviews.count()
-    #         return round(sum_reviews/reviews_count, 1)
-    #     return None
-
-    def get_rate(self, obj):
-        rate = obj.reviews.aggregate(Avg('stars'))['stars__avg']
-        if rate:
-            return round(rate, 1)
-        return None
 
     ''' Para fazer validações nos campos ou regras de negócio use validate_nomedocampo(self,value):...validationError'''
     # function validate_name_field(self, value):
@@ -41,6 +37,22 @@ class MovieSerializer(serializers.ModelSerializer):
         if len(value) > 500:
             raise serializers.ValidationError('o resume não pode ter mais de 200 caracteres')
         return value
+
+
+class MovieListDetailSerializer(serializers.ModelSerializer):
+    actors = ActorSerializer(many=True)
+    genre = GenreSerializer()
+    rate = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Movie
+        fields = ['id', 'title', 'genre', 'actors', 'release_date', 'rate', 'resume']
+
+    def get_rate(self, obj):
+        rate = obj.reviews.aggregate(Avg('stars'))['stars__avg']
+        if rate:
+            return round(rate, 1)
+        return None
 
 
 class MovieStatsSerializer(serializers.Serializer):

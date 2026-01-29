@@ -83,15 +83,19 @@ Após o login, o usuário recebe um **access token** e um **refresh token**, que
 
 ### 🔧 1. Clone o repositório
 ```bash
-git clone https://github.com/Francelmo87/flix-api-drf.git
-cd movieverse-api
+# Clone esse repósitorio
+git clone https://github.com/Francelmo87/flix_api_drf.git
+# entre no projeto
+cd flix_api_drf
 # Crie sua venv
 python -m venv .venv
 # Ative sua venv(o comando é de acordo com seu S.O)     
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
+source .venv/bin/activate   # Linux/Mac
+.venv\Scripts\activate      # Windows
 # Instale as dependências
 pip install -r requirements.txt
+# Para Criar as variáveis de ambientes .env
+python env_gen.py
 # Faça as Migrações para o banco de Dados  
 python manage.py migrate          
 # Crie seu super usuário

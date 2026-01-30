@@ -129,13 +129,13 @@ Nesse sistema foi criados dois grupos de permissões
 ## 📸 Demonstração da API (Postman)
 
 ### 🔐 Autenticação JWT
-![Autenticação JWT](docs/images/postman_token.png)
+![Autenticação JWT](Docs/images/postman_token.png)
 
 ### 🎬 Listagem de Filmes
-![Listagem de Filmes](docs/images/postman_movies_get.png)
+![Listagem de Filmes](Docs/images/postman_movies_get.png)
 
 ### 🎬 Listagem de Atores
-![Listagem de Atores](docs/images/postman_actors_get.png)
+![Listagem de Atores](Docs/images/postman_actors_get.png)
 
 
 ## 🎯 Objetivo do Projeto

@@ -1,104 +1,159 @@
-# 🎬 MovieVerse API  
-> Uma API REST moderna para cadastro e avaliação de filmes, desenvolvida com **Python**, **Django** e **Django Rest Framework (DRF)**.  
-> Os usuários podem cadastrar filmes, gêneros e atores, além de avaliar os filmes com estrelas e comentários.
+# 🎬 MovieVerse API
+
+[![Python](https://img.shields.io/badge/Python-3.11-blue)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-5.2.6-green)](https://www.djangoproject.com/)
+[![DRF](https://img.shields.io/badge/DRF-3.15.0-lightgrey)](https://www.django-rest-framework.org/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
+API REST para gerenciamento de filmes, gêneros, atores e avaliações, desenvolvida com **Django REST Framework**.
+Projeto focado em boas práticas de backend, autenticação JWT e arquitetura RESTful — ideal para portfólio profissional.
 
 ---
 
 ## 🚀 Tecnologias Utilizadas
 
-- 🐍 **Python 3.11.7**  
-- 🌐 **Django 5.2.6**  
-- ⚙️ **Django Rest Framework (DRF)**  
-- 🔐 **JWT Authentication (SimpleJWT)**  
-- 🗄️ **SQLite3** (pode ser substituído por PostgreSQL em produção)   
-- 📦 **pip** para gerenciamento de dependências  
+* **Python 3.11**
+* **Django 5**
+* **Django REST Framework (DRF)**
+* **JWT Authentication (SimpleJWT)**
+* **SQLite** (pode ser facilmente adaptado para PostgreSQL)
 
 ---
 
-## 🧩 Estrutura da Aplicação
+## ✨ Funcionalidades
 
-A API é composta pelos seguintes módulos principais:
-
-| Módulo | Descrição |
-|--------|------------|
-| **users** | Gerenciamento de usuários e autenticação via JWT |
-| **movies** | CRUD completo de filmes e gêneros |
-| **actors** | Cadastro e listagem de atores |
-| **reviews** | Sistema de avaliações com estrelas e comentários vinculados aos filmes |
+* CRUD completo de **Filmes**, **Gêneros** e **Atores**
+* Sistema de **avaliações com estrelas**
+* Relacionamentos Many-to-Many
+* Autenticação e autorização com **JWT**
+* Versionamento de API
 
 ---
 
-## 🔑 Autenticação JWT
+## 📁 Estrutura do Projeto
 
-O sistema utiliza **JSON Web Tokens (JWT)** para autenticação de usuários.  
-Após o login, o usuário recebe um **access token** e um **refresh token**, que devem ser usados para acessar rotas protegidas.
-
-### Endpoints principais de autenticação:
-| Método | Endpoint | Descrição |
-|--------|-----------|-----------|
-| `POST` | `api/v1/authentication/token/` | Gera um novo par de tokens (login) |
-| `POST` | `api//v1/authentication/token/refresh/` | Atualiza o access token expirado |
-
----
-
-## 🎯 Principais Endpoints da API
-
-### 🎞️ Filmes
-| Método | Endpoint | Descrição |
-|--------|-----------|-----------|
-| `GET` | `/api/v1/movies/` | Lista todos os filmes |
-| `POST` | `/api/v1/movies/` | Cria um novo filme |
-| `GET` | `/api/v1/movies/{id}/` | Detalhes de um filme específico |
-| `PUT` | `/api/v1/movies/{id}/` | Atualiza informações do filme |
-| `DELETE` | `/api/v1/movies/{id}/` | Exclui um filme |
-
-### 👤 Atores
-| Método | Endpoint | Descrição |
-|--------|-----------|-----------|
-| `GET` | `/api/v1/actors/` | Lista todos os atores |
-| `POST` | `/api/v1/actors/` | Cadastra um novo ator |
-| `GET` | `/api/v1/actors/{id}/` | Detalhes de um ator específico |
-| `PUT` | `/api/v1/actors/{id}/` | Atualiza informações do ator |
-| `DELETE` | `/api/v1/actors/{id}/` | Exclui um ator |
-
-### 🎭 Gêneros
-| Método | Endpoint | Descrição |
-|--------|-----------|-----------|
-| `GET` | `/api/v1/genres/` | Lista todos os gêneros |
-| `POST` | `/api/v1/genres/` | Cadastra um novo gênero |
-| `GET` | `/api/v1/genres/{id}/` | Detalhes de um gênero específico |
-| `PUT` | `/api/v1/genres/{id}/` | Atualiza informações do gênero |
-| `DELETE` | `/api/v1/genres/{id}/` | Exclui um gênero |
-
-### 🌟 Avaliações
-| Método | Endpoint | Descrição |
-|--------|-----------|-----------|
-| `GET` | `/api//v1reviews/` | Lista todas as avaliações |
-| `POST` | `/api/v1/reviews/` | Cria uma nova avaliação (necessita autenticação) |
-| `GET` | `/api/v1/reviews/{id}/` | Detalha uma avaliação específica |
+```text
+flix_api_drf/
+│── actors/
+│── genres/
+│── movies/
+│── reviews/
+│── authentication/
+│── core/
+│── manage.py
+```
 
 ---
 
-## ⚙️ Instalação e Configuração
+## 🛠️ Instalação e Execução
 
-### 🔧 1. Clone o repositório
+### 1️⃣ Clone o repositório
+
 ```bash
-# Clone esse repósitorio
 git clone https://github.com/Francelmo87/flix_api_drf.git
-# entre no projeto
 cd flix_api_drf
-# Crie sua venv
+```
+
+### 2️⃣ Crie e ative o ambiente virtual
+
+```bash
 python -m venv .venv
-# Ative sua venv(o comando é de acordo com seu S.O)     
-source .venv/bin/activate   # Linux/Mac
-.venv\Scripts\activate      # Windows
-# Instale as dependências
+source .venv/bin/activate  # Linux / WSL
+.venv\Scripts\activate     # Windows
+```
+
+### 3️⃣ Instale as dependências
+
+```bash
 pip install -r requirements.txt
-# Para Criar as variáveis de ambientes .env
+```
+
+### 4️⃣ Configure o ambiente
+
+```bash
 python env_gen.py
-# Faça as Migrações para o banco de Dados  
-python manage.py migrate          
-# Crie seu super usuário
-python manage.py createsuperuser
-# rode em sua máquina (acesse ao seu navegador)
+```
+
+### 5️⃣ Migrações e servidor
+
+```bash
+python manage.py migrate
 python manage.py runserver
+```
+
+A API está publicada e disponível para testes em produção:
+
+🔗 https://francelmo87.pythonanywhere.com
+
+---
+
+## 🔐 Autenticação
+
+A API utiliza **JWT** para autenticação.
+
+### Gerar token
+
+```http
+POST francelmo87.pythonanywhere.com/api/v1/authentication/token/
+Username: Visitante
+Password: User@django
+```
+
+### Atualizar token
+
+```http
+POST francelmo87.pythonanywhere.com/api/v1/authentication/token/refresh/
+```
+
+---
+
+## 📌 Principais Endpoints
+
+| Método | Endpoint           | Descrição      |
+| ------ | ------------------ | -------------- |
+| GET    | `francelmo87.pythonanywhere.com/api/v1/movies/`  | Lista filmes   |
+| POST   | `francelmo87.pythonanywhere.com/api/v1/movies/`  | Cria um filme  |
+| GET    | `francelmo87.pythonanywhere.com/api/v1/genres/`  | Lista gêneros  |
+| POST   | `francelmo87.pythonanywhere.com/api/v1/genres/`  | Cria gêneros   |
+| GET    | `francelmo87.pythonanywhere.com/api/v1/actors/`  | Lista atores   |
+| POST   | `francelmo87.pythonanywhere.com/api/v1/actors/`  | Cria atores    |
+| POST   | `francelmo87.pythonanywhere.com/api/v1/reviews/` | Cria avaliação |
+
+---
+## Usuários e Grupos
+
+Nesse sistema foi criados dois grupos de permissões
+1. Admin_user -> Faz todas as requisições em todos os endpoints do sistema(GET, POST, PATCHE, PUT, DELETE)
+2. regular_user -> Faz apenas as visualizações dos endpoints(GET)
+
+## 📸 Demonstração da API (Postman)
+
+### 🔐 Autenticação JWT
+![Autenticação JWT](docs/images/postman_token.png)
+
+### 🎬 Listagem de Filmes
+![Listagem de Filmes](docs/images/postman_movies_get.png)
+
+### 🎬 Listagem de Atores
+![Listagem de Atores](docs/images/postman_actors_get.png)
+
+
+## 🎯 Objetivo do Projeto
+
+Este projeto foi desenvolvido para consolidar conhecimentos em:
+
+* Django REST Framework
+* APIs RESTful
+* Autenticação JWT
+* Boas práticas de backend
+
+---
+
+## 📫 Contato
+
+**Francelmo Sousa da Silva**
+🔗 GitHub: [https://github.com/Francelmo87](https://github.com/Francelmo87)
+
+---
+
+⭐ Se este projeto te ajudou ou chamou atenção, considere deixar uma estrela!
